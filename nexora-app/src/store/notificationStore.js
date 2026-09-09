@@ -1,13 +1,3 @@
-/**
- * notificationStore.js — Module 4
- *
- * Zustand store — manages notification UI state only.
- * All data operations go through analyticsService.
- *
- * Architecture:
- *   Component → Store action → Service → Mock DB (localStorage) → State update
- */
-
 import { create } from 'zustand';
 import {
   fetchNotifications,
@@ -23,8 +13,6 @@ export const useNotificationStore = create((set, get) => ({
   loading:       false,
   filter:        'all',
 
-  // ── Read ───────────────────────────────────────────────────────────────────
-
   fetchNotifications: async () => {
     set({ loading: true });
     try {
@@ -37,8 +25,6 @@ export const useNotificationStore = create((set, get) => ({
   },
 
   setFilter: (filter) => set({ filter }),
-
-  // ── Create ─────────────────────────────────────────────────────────────────
 
   createNotification: async (data) => {
     try {
@@ -54,10 +40,7 @@ export const useNotificationStore = create((set, get) => ({
     }
   },
 
-  // ── Update ─────────────────────────────────────────────────────────────────
-
   markRead: async (id) => {
-    // Optimistic update
     set((s) => {
       const notifications = s.notifications.map((n) =>
         n._id === id ? { ...n, read: true } : n
@@ -68,13 +51,11 @@ export const useNotificationStore = create((set, get) => ({
       await markNotificationRead(id);
     } catch (err) {
       console.error('Failed to mark notification read:', err);
-      // Rollback
       await get().fetchNotifications();
     }
   },
 
   markAllRead: async () => {
-    // Optimistic update
     set((s) => ({
       notifications: s.notifications.map((n) => ({ ...n, read: true })),
       unreadCount:   0,
@@ -87,10 +68,7 @@ export const useNotificationStore = create((set, get) => ({
     }
   },
 
-  // ── Delete ─────────────────────────────────────────────────────────────────
-
   deleteNotification: async (id) => {
-    // Optimistic update
     set((s) => {
       const notifications = s.notifications.filter((n) => n._id !== id);
       return { notifications, unreadCount: notifications.filter((n) => !n.read).length };

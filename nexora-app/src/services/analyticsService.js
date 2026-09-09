@@ -4,7 +4,6 @@ import { loadFromStorage } from '../lib/storage';
 
 const delay = (ms = 400) => new Promise(r => setTimeout(r, ms));
 
-// Fallback seed tasks when nexora_tasks not yet set (standalone run)
 const SEED_TASKS = [
   { status:'DONE',        priority:'high',   project:'proj_001', assignee:{_id:'user_001',name:'Tanishq Patel'} },
   { status:'DONE',        priority:'medium', project:'proj_001', assignee:{_id:'user_002',name:'Tanmai Pahwa'} },
@@ -22,7 +21,6 @@ const SEED_TASKS = [
 
 function getLiveTasks() { return loadFromStorage('nexora_tasks', SEED_TASKS); }
 
-// Analytics
 export const getAnalyticsSummary = async (workspaceId = 'ws_001') => {
   await delay(350);
   const tasks = getLiveTasks();
@@ -53,7 +51,6 @@ export const getWeeklyProgress = async () => { await delay(300); return mockWeek
 export const getTeamWorkload   = async () => { await delay(300); return mockTeamWorkload; };
 export const getProjectHealth  = async () => { await delay(300); return mockProjectHealth; };
 
-// Notifications
 export const fetchNotifications = async () => {
   await delay(350);
   const all = getNotifications();

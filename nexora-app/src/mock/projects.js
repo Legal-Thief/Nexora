@@ -52,5 +52,13 @@ const SEED = [
     createdAt: '2024-02-15T09:00:00.000Z', updatedAt: '2024-08-05T09:00:00.000Z',
   },
 ];
-export function getProjects()      { return loadFromStorage(KEY, SEED); }
+export function getProjects() {
+  const projects = loadFromStorage(KEY, null);
+  if (!projects || JSON.stringify(projects).includes('Sharma') || JSON.stringify(projects).includes('Mehta') || !JSON.stringify(projects).includes('Tanishq Patel')) {
+    saveProjects(SEED);
+    return SEED;
+  }
+  return projects;
+}
+
 export function saveProjects(data) { saveToStorage(KEY, data); }

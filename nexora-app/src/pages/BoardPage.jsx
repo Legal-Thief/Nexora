@@ -1,21 +1,12 @@
-/**
- * BoardPage.jsx — Kanban board page
- *
- * Integration key: reads projectId from URL params (/board/:projectId)
- * so clicking "Open Board" on a ProjectCard opens that project's tasks.
- * Falls back to 'proj_001' if no projectId is provided (/board).
- *
- * All task CRUD logic is unchanged from Module 3.
- */
-
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, Search, SlidersHorizontal, CheckCircle2, CircleDot, Clock, Kanban, ArrowLeft } from 'lucide-react';
+import { Plus, Search, SlidersHorizontal, CheckCircle2, CircleDot, Clock, Kanban, ArrowLeft, User } from 'lucide-react';
 import KanbanBoard     from '../components/kanban/KanbanBoard';
 import TaskModal       from '../components/kanban/TaskModal';
 import CreateTaskModal from '../components/kanban/CreateTaskModal';
 import { useTaskStore } from '../store/taskStore';
 import useWorkspaceStore from '../store/workspaceStore';
+import { ASSIGNEES } from '../constants/kanban';
 
 export default function BoardPage() {
   const { projectId: paramProjectId } = useParams();
@@ -30,7 +21,6 @@ export default function BoardPage() {
 
   useEffect(() => { fetchTasks(PROJECT_ID); }, [PROJECT_ID]);
 
-  // Find project name from workspaceStore if available
   const project = projects.find(p => p._id === PROJECT_ID);
 
   const completedCount    = tasks.filter(t => t.status === 'DONE').length;
@@ -42,7 +32,6 @@ export default function BoardPage() {
     <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col">
       <div className="flex-1 flex flex-col p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
 
-        {/* ── Header ──────────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div className="flex items-start gap-4">
             <div className="p-2.5 bg-indigo-500/10 border border-indigo-500/20 rounded-xl shrink-0">
@@ -78,7 +67,6 @@ export default function BoardPage() {
           </button>
         </div>
 
-        {/* ── Summary Cards ─────────────────────────────────────────── */}
         {!loading && totalCount > 0 && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {[
@@ -108,7 +96,6 @@ export default function BoardPage() {
           </div>
         )}
 
-        {/* ── Filter Bar ────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-3 mb-6 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3">
           <div className="relative flex-1 min-w-[200px]">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
@@ -133,14 +120,28 @@ export default function BoardPage() {
               <option value="low">⚪ Low</option>
             </select>
           </div>
-          {(filters.search || filters.priority) && (
+
+          <div className="flex items-center gap-2">
+            <User size={14} className="text-slate-500 shrink-0" />
+            <select
+              value={filters.assignee}
+              onChange={e => setFilters({ assignee: e.target.value })}
+              className="bg-slate-800 border border-slate-700 text-slate-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition cursor-pointer"
+            >
+              <option value="">All assignees</option>
+              {ASSIGNEES.map(a => (
+                <option key={a._id} value={a._id}>👤 {a.name}</option>
+              ))}
+            </select>
+          </div>
+
+          {(filters.search || filters.priority || filters.assignee) && (
             <button onClick={clearFilters} className="text-xs text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 px-3 py-1.5 rounded-lg transition font-medium">
               ✕ Clear
             </button>
           )}
         </div>
 
-        {/* ── Board ─────────────────────────────────────────────────── */}
         <div className="flex-1 min-h-0">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-32 gap-4">
@@ -153,7 +154,6 @@ export default function BoardPage() {
         </div>
       </div>
 
-      {/* ── Modals ──────────────────────────────────────────────────────── */}
       {selectedTask && <TaskModal task={selectedTask} onClose={() => setSelectedTask(null)} />}
       {showCreate && <CreateTaskModal projectId={PROJECT_ID} onClose={() => setShowCreate(false)} />}
     </div>

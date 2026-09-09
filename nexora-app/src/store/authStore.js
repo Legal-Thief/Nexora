@@ -1,23 +1,3 @@
-/**
- * authStore.js
- *
- * Zustand store for authentication state.
- *
- * State:
- *   user       — current logged-in user object or null
- *   token      — simulated session token or null
- *   isLoading  — async operation in progress
- *   error      — last error message
- *
- * Actions:
- *   login()         — authenticates user via authService.loginUser
- *   register()      — registers user via authService.registerUser
- *   logout()        — clears session
- *   loadUser()      — restores session from localStorage using authService.getMe
- *   updateProfile() — updates display name via authService.updateProfile
- *   clearError()    — clears error message
- */
-
 import { create } from 'zustand';
 import { loginUser, registerUser, getMe, updateProfile } from '../services/authService';
 
@@ -82,5 +62,4 @@ export const useAuthStore = create((set, get) => ({
   clearError: () => set({ error: null }),
 }));
 
-// Default export for backwards-compat with pages that use default import
 export default useAuthStore;

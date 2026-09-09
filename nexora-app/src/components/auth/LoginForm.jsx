@@ -20,7 +20,6 @@ export default function LoginForm() {
       await login(form);
       navigate('/profile');
     } catch {
-      // Error is displayed via store
     }
   };
 
@@ -37,11 +36,11 @@ export default function LoginForm() {
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
           <input
-            type="email"
+            type="text"
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="you@nexora.com"
+            placeholder="demo@nexora or demo@nexora.com"
             required
             className="w-full pl-9 pr-4 py-2.5 bg-slate-800 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
           />
@@ -88,9 +87,10 @@ export default function LoginForm() {
       </p>
 
       <div className="border-t border-slate-700/50 pt-3">
-        <p className="text-xs text-slate-600 text-center">Demo: demo@nexora.com / password123</p>
+        <p className="text-xs text-slate-400 text-center font-medium">
+          Demo credentials: <span className="text-indigo-400 font-semibold">demo@nexora</span> / <span className="text-indigo-400 font-semibold">password123</span>
+        </p>
       </div>
     </form>
   );
 }
-

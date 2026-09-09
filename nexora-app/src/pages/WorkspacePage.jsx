@@ -42,7 +42,6 @@ export default function WorkspacePage() {
 
   return (
     <div className="p-8 min-h-screen bg-slate-950 text-slate-100 max-w-7xl mx-auto">
-      {/* Workspace Header */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 mb-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"/>
 
@@ -92,7 +91,6 @@ export default function WorkspacePage() {
               {activeWorkspace.plan.toUpperCase()} PLAN
             </span>
 
-            {/* Delete workspace (owner only in real app) */}
             {!confirmDelete ? (
               <button onClick={() => setConfirmDelete(true)}
                 className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 hover:bg-red-400/10 px-3 py-1.5 rounded-lg transition">
@@ -111,7 +109,6 @@ export default function WorkspacePage() {
         </div>
       </div>
 
-      {/* Projects + Members */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           <h2 className="text-xl font-semibold">Workspace Projects</h2>
@@ -137,4 +134,3 @@ export default function WorkspacePage() {
     </div>
   );
 }
-

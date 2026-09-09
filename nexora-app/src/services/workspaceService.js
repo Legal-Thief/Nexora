@@ -1,41 +1,13 @@
-/**
- * workspaceService.js — Module 2: Workspace + Projects
- *
- * Service layer — the ONLY place that reads/writes mock database arrays.
- * Components and stores never access mock data directly.
- *
- * Every mutation:
- *   1. Reads current data from localStorage via getter
- *   2. Validates input
- *   3. Applies change to a new array (immutable pattern)
- *   4. Persists updated array back to localStorage
- *   5. Returns the result
- *
- * ID generation:
- *   Uses crypto.randomUUID() — collision-safe, no integer ID collisions
- *   even after records are deleted and recreated.
- *
- * FUTURE INTEGRATION:
- *   Replace each function body with an axios call.
- *   The store and components do NOT need to change.
- */
-
 import { getWorkspaces, saveWorkspaces } from '../mock/workspaces';
 import { getProjects,   saveProjects   } from '../mock/projects';
 
 const delay = (ms = 450) => new Promise((r) => setTimeout(r, ms));
 
-// ══════════════════════════════════════════════════════
-//  WORKSPACE CRUD
-// ══════════════════════════════════════════════════════
-
-/** Read — GET /api/workspaces */
 export const fetchWorkspaces = async () => {
   await delay(400);
   return { workspaces: getWorkspaces() };
 };
 
-/** Read — GET /api/workspaces/:id */
 export const fetchWorkspace = async (id) => {
   await delay(250);
   const ws = getWorkspaces().find((w) => w._id === id);
@@ -43,15 +15,12 @@ export const fetchWorkspace = async (id) => {
   return { workspace: ws };
 };
 
-/** Create — POST /api/workspaces */
 export const createWorkspace = async (data, currentUser) => {
   await delay(500);
 
-  // ── Validation ──
   if (!data.name?.trim()) throw new Error('Workspace name is required.');
   if (data.name.trim().length > 80) throw new Error('Workspace name must be 80 characters or fewer.');
 
-  // ── Duplicate name check ──
   const existing = getWorkspaces().find(
     (w) => w.name.toLowerCase() === data.name.trim().toLowerCase()
   );
@@ -60,7 +29,7 @@ export const createWorkspace = async (data, currentUser) => {
   const owner = {
     _id:   currentUser?._id   || 'user_001',
     name:  currentUser?.name  || 'Tanishq Patel',
-    email: currentUser?.email || 'tanishq@nexora.com',
+    email: currentUser?.email || 'demo@nexora.com',
   };
 
   const workspace = {
@@ -79,7 +48,6 @@ export const createWorkspace = async (data, currentUser) => {
   return { workspace };
 };
 
-/** Update — PATCH /api/workspaces/:id */
 export const updateWorkspace = async (id, data) => {
   await delay(350);
   if (!id) throw new Error('Workspace ID is required.');
@@ -100,7 +68,6 @@ export const updateWorkspace = async (id, data) => {
   return { workspace: updated[idx] };
 };
 
-/** Delete — DELETE /api/workspaces/:id */
 export const deleteWorkspace = async (id) => {
   await delay(400);
   if (!id) throw new Error('Workspace ID is required.');
@@ -109,22 +76,16 @@ export const deleteWorkspace = async (id) => {
   if (!all.find((w) => w._id === id)) throw new Error('Workspace not found.');
 
   saveWorkspaces(all.filter((w) => w._id !== id));
-  saveProjects(getProjects().filter((p) => p.workspace !== id));  // cascade
+  saveProjects(getProjects().filter((p) => p.workspace !== id));  
   return { success: true };
 };
 
-// ══════════════════════════════════════════════════════
-//  PROJECT CRUD
-// ══════════════════════════════════════════════════════
-
-/** Read — GET /api/workspaces/:id/projects */
 export const fetchProjects = async (workspaceId) => {
   await delay(350);
   if (!workspaceId) throw new Error('Workspace ID is required.');
   return { projects: getProjects().filter((p) => p.workspace === workspaceId) };
 };
 
-/** Read — GET /api/projects/:id */
 export const fetchProject = async (id) => {
   await delay(200);
   const project = getProjects().find((p) => p._id === id);
@@ -132,11 +93,9 @@ export const fetchProject = async (id) => {
   return { project };
 };
 
-/** Create — POST /api/workspaces/:id/projects */
 export const createProject = async (workspaceId, data, currentUser) => {
   await delay(500);
 
-  // ── Validation ──
   if (!workspaceId)       throw new Error('Workspace ID is required.');
   if (!data.name?.trim()) throw new Error('Project name is required.');
   if (data.name.trim().length > 100) throw new Error('Project name must be 100 characters or fewer.');
@@ -175,7 +134,6 @@ export const createProject = async (workspaceId, data, currentUser) => {
   return { project };
 };
 
-/** Update — PATCH /api/projects/:id */
 export const updateProject = async (id, data) => {
   await delay(350);
   if (!id) throw new Error('Project ID is required.');
@@ -207,7 +165,6 @@ export const updateProject = async (id, data) => {
   return { project: updated[idx] };
 };
 
-/** Delete — DELETE /api/projects/:id */
 export const deleteProject = async (id) => {
   await delay(350);
   if (!id) throw new Error('Project ID is required.');

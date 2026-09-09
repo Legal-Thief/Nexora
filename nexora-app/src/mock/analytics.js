@@ -7,7 +7,6 @@ export const mockWeeklyProgress = [
   { week:'Week 6', completed:11, created:9,  net:2  },
 ];
 
-// Full names so the Team Workload chart Y-axis shows complete names
 export const mockTeamWorkload = [
   { name:'Tanishq Patel', assigned:14, completed:8,  overdue:1 },
   { name:'Tanmai Pahwa',  assigned:11, completed:7,  overdue:2 },

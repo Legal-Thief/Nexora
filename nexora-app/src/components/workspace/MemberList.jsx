@@ -31,10 +31,10 @@ export default function MemberList({ members }) {
       
       <div className="divide-y divide-slate-800/50">
         {members.map(member => (
-          <div key={member.id} className="flex items-center justify-between p-4 hover:bg-slate-800/30 transition-colors">
+          <div key={member._id || member.id || member.email} className="flex items-center justify-between p-4 hover:bg-slate-800/30 transition-colors">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center font-semibold text-sm border border-slate-700">
-                {member.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
+              <div className="w-10 h-10 rounded-full bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-sm border border-indigo-500/30">
+                {member.name ? member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '?'}
               </div>
               <div>
                 <p className="text-sm font-medium text-slate-200">{member.name}</p>

@@ -2,14 +2,12 @@ import { useState } from 'react';
 import TaskCard from './TaskCard';
 import { Plus } from 'lucide-react';
 
-// Column accent colours 
 const columnConfig = {
   TODO:        { dot: 'bg-slate-400',    header: 'border-slate-400/30',   bg: 'bg-slate-400/5'   },
   IN_PROGRESS: { dot: 'bg-blue-400',     header: 'border-blue-400/30',    bg: 'bg-blue-400/5'    },
   REVIEW:      { dot: 'bg-violet-400',   header: 'border-violet-400/30',  bg: 'bg-violet-400/5'  },
   DONE:        { dot: 'bg-emerald-400',  header: 'border-emerald-400/30', bg: 'bg-emerald-400/5' },
 };
-
 
 export default function KanbanColumn({
   columnKey, label, tasks,
@@ -25,7 +23,6 @@ export default function KanbanColumn({
   return (
     <div className="flex flex-col w-[300px] xl:w-[320px] shrink-0">
 
-      {/*  Column Header  */}
       <div className={`flex items-center justify-between mb-3 px-1 pb-3 border-b ${cfg.header}`}>
         <div className="flex items-center gap-2.5">
           <div className={`w-2 h-2 rounded-full ${cfg.dot} ring-2 ring-current ring-offset-2 ring-offset-slate-950`} />
@@ -36,7 +33,6 @@ export default function KanbanColumn({
         </span>
       </div>
 
-      {/*  Drop */}
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -49,7 +45,6 @@ export default function KanbanColumn({
           }
         `}
       >
-        {/* Task cards */}
         <div className="flex flex-col gap-2.5 flex-1">
           {tasks.map((task) => (
             <TaskCard
@@ -62,7 +57,6 @@ export default function KanbanColumn({
           ))}
         </div>
 
-        {/* Empty state */}
         {tasks.length === 0 && !isOver && (
           <div className="flex-1 flex flex-col items-center justify-center py-8 opacity-40">
             <div className={`w-8 h-8 rounded-full ${cfg.dot} opacity-20 mb-2`} />
@@ -70,7 +64,6 @@ export default function KanbanColumn({
           </div>
         )}
 
-        {/* Add task shortcut */}
         <button
           className="mt-3 w-full py-2 flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-lg transition-all text-xs font-medium border border-transparent hover:border-slate-700"
         >
@@ -81,4 +74,3 @@ export default function KanbanColumn({
     </div>
   );
 }
-

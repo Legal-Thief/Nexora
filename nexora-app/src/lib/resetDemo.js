@@ -1,7 +1,3 @@
-/**
- * resetDemo — removes ALL Nexora data from localStorage.
- * Safe: only removes nexora_* keys, not everything.
- */
 const NEXORA_KEYS = [
   'nexora_users', 'nexora_credentials', 'nexora_token',
   'nexora_workspaces', 'nexora_projects',

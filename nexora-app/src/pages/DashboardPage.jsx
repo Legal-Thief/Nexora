@@ -5,7 +5,6 @@ import WorkspaceCard from '../components/workspace/WorkspaceCard';
 import ProjectCard from '../components/workspace/ProjectCard';
 import { Briefcase, Users, LayoutGrid, Plus, X } from 'lucide-react';
 
-// ─── Inline Create-Workspace Modal ───────────────────────────────────────────
 function CreateWorkspaceModal({ onClose, onSave }) {
   const [form, setForm] = useState({ name: '', description: '', plan: 'free' });
   const [saving, setSaving] = useState(false);
@@ -65,7 +64,6 @@ function CreateWorkspaceModal({ onClose, onSave }) {
   );
 }
 
-// ─── Dashboard Page ───────────────────────────────────────────────────────────
 export default function Dashboard() {
   const {
     workspaces, activeWorkspace, projects, loading,
@@ -94,7 +92,6 @@ export default function Dashboard() {
 
   return (
     <div className="p-8 min-h-screen bg-slate-950 text-slate-100">
-      {/* Header */}
       <div className="flex items-start justify-between mb-10">
         <div>
           <h1 className="text-3xl font-bold mb-2">Welcome to Nexora</h1>
@@ -108,7 +105,6 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* Workspaces */}
       <div className="mb-12">
         <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
           <Briefcase className="text-indigo-400"/> Your Workspaces
@@ -132,7 +128,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Active Workspace Stats + Projects */}
       {activeWorkspace && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -150,6 +145,38 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
+
+          {activeWorkspace.members && activeWorkspace.members.length > 0 && (
+            <div className="mb-12">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold flex items-center gap-2 text-slate-100">
+                  <Users className="text-indigo-400" size={20} /> Team Members
+                </h2>
+                <span className="text-xs text-slate-500 font-medium">
+                  {activeWorkspace.members.length} members in {activeWorkspace.name}
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {activeWorkspace.members.map((member) => (
+                  <div
+                    key={member._id || member.id || member.email}
+                    className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-3.5 hover:border-slate-700 transition"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-sm shrink-0">
+                      {member.name ? member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '?'}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-slate-200 truncate">{member.name}</p>
+                      <p className="text-xs text-slate-500 truncate">{member.email}</p>
+                      <span className="inline-block text-[10px] font-medium text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded mt-1 border border-indigo-500/20 capitalize">
+                        {member.role || 'member'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div>
             <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
@@ -171,7 +198,6 @@ export default function Dashboard() {
           </div>
         </>
       )}
-      {/* Reset Demo Data strip */}
       <div className="mt-12 pt-6 border-t border-slate-800/50 flex justify-end">
         <button
           onClick={() => { resetNexoraData(); window.location.reload(); }}
@@ -182,7 +208,6 @@ export default function Dashboard() {
         </button>
       </div>
 
-
       {showCreateWs && (
         <CreateWorkspaceModal
           onClose={() => setShowCreateWs(false)}
@@ -192,5 +217,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-

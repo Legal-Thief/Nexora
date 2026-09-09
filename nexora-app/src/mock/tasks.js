@@ -246,7 +246,12 @@ export const mockTasks = [
 ];
 
 export function getTasks() {
-  return loadFromStorage(TASKS_KEY, mockTasks);
+  const tasks = loadFromStorage(TASKS_KEY, null);
+  if (!tasks || JSON.stringify(tasks).includes('Sharma') && !JSON.stringify(tasks).includes('Vidita Sharma') || JSON.stringify(tasks).includes('Mehta') || !JSON.stringify(tasks).includes('Tanishq Patel')) {
+    saveTasks(mockTasks);
+    return mockTasks;
+  }
+  return tasks;
 }
 export function saveTasks(tasks) {
   saveToStorage(TASKS_KEY, tasks);

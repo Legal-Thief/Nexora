@@ -1,6 +1,5 @@
 import { CalendarDays, AlertTriangle } from 'lucide-react';
 
-// â”€â”€â”€ Priority config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const priorityConfig = {
   urgent: {
     border:  'border-l-red-500',
@@ -27,7 +26,6 @@ const priorityConfig = {
 const getInitials = (name) =>
   name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || '?';
 
-// â”€â”€â”€ Avatar colour by user ID (deterministic) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const avatarColors = {
   user_001: 'bg-indigo-600',
   user_002: 'bg-violet-600',
@@ -35,16 +33,10 @@ const avatarColors = {
   user_004: 'bg-amber-700',
 };
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// TaskCard
-// Logic: identical (draggable, onClick). Only visual markup changed.
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
 export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
   const cfg = priorityConfig[task.priority] || priorityConfig.low;
 
   const handleDragStart = (e) => {
-    // Required for Firefox DnD compatibility
     e.dataTransfer.setData('text/plain', task._id);
     e.dataTransfer.effectAllowed = 'move';
     if (onDragStart) onDragStart(task._id);
@@ -69,7 +61,6 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
         transition-all duration-150 select-none
       `}
     >
-      {/* â”€â”€ Labels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {task.labels && task.labels.length > 0 && (
         <div className="flex flex-wrap gap-1 mb-2.5">
           {task.labels.map((label) => (
@@ -83,15 +74,12 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
         </div>
       )}
 
-      {/* â”€â”€ Title â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <h4 className="text-slate-100 text-sm font-medium leading-snug line-clamp-2 mb-3 group-hover:text-white transition-colors">
         {task.title}
       </h4>
 
-      {/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="flex items-center justify-between mt-auto">
 
-        {/* Assignee avatar */}
         <div>
           {task.assignee ? (
             <div
@@ -110,14 +98,11 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
           )}
         </div>
 
-        {/* Right side: deadline + priority badge */}
         <div className="flex items-center gap-2">
-          {/* Urgent flag */}
           {task.priority === 'urgent' && (
             <AlertTriangle size={12} className="text-red-400 shrink-0" />
           )}
 
-          {/* Deadline */}
           {task.deadline && (
             <div
               className={`flex items-center gap-1 text-[11px] font-medium ${
@@ -134,7 +119,6 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
             </div>
           )}
 
-          {/* Priority badge (non-urgent only â€” urgent already flagged above) */}
           {task.priority !== 'urgent' && (
             <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md border ${cfg.badge} hidden group-hover:inline-flex transition-all`}>
               {cfg.label}
@@ -145,4 +129,3 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
     </div>
   );
 }
-

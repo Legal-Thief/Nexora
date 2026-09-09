@@ -2,11 +2,6 @@ import { useTaskStore } from '../../store/taskStore';
 import KanbanColumn from './KanbanColumn';
 import { COLUMNS, COLUMN_LABELS } from '../../constants/kanban';
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// KanbanBoard â€” pure drag-and-drop orchestrator.
-// No logic changes. Only the filter bar was removed (moved to ProjectBoard).
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
 export default function KanbanBoard({ onTaskClick }) {
   const {
     draggedTaskId,
@@ -26,7 +21,6 @@ export default function KanbanBoard({ onTaskClick }) {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Board scroll container â€” horizontal scroll on small screens */}
       <div className="flex-1 overflow-x-auto pb-6">
         <div className="flex gap-5 min-w-max h-full">
           {COLUMNS.map((columnKey) => (
@@ -46,4 +40,3 @@ export default function KanbanBoard({ onTaskClick }) {
     </div>
   );
 }
-

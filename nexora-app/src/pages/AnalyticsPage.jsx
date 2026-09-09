@@ -76,7 +76,6 @@ export default function Analytics() {
         <h1 className="text-2xl font-bold text-slate-100">Analytics Dashboard</h1>
       </div>
 
-      {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: 'Total Tasks',    value: data.summary?.totalTasks    || 0, icon: Target,      color: 'text-indigo-500' },
@@ -101,7 +100,6 @@ export default function Analytics() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Task Status Pie Chart */}
         <ChartCard title="Task Distribution" loading={loading} className="lg:col-span-1">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -116,7 +114,6 @@ export default function Analytics() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Weekly Progress */}
         <ChartCard title="Weekly Progress" subtitle="Tasks created vs completed" loading={loading} className="lg:col-span-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.weeklyProgress} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -131,7 +128,6 @@ export default function Analytics() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Team Workload */}
         <ChartCard title="Team Workload" loading={loading} className="lg:col-span-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.teamWorkload} layout="vertical" margin={{ top: 10, right: 10, left: 20, bottom: 0 }}>
@@ -146,7 +142,6 @@ export default function Analytics() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Activity Feed */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 lg:col-span-1">
           <h3 className="text-lg font-semibold text-slate-100 mb-6">Recent Activity</h3>
           {loading ? (
@@ -167,7 +162,6 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* Project Health Table */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
         <div className="p-6 border-b border-slate-800">
           <h3 className="text-lg font-semibold text-slate-100">Project Health</h3>
@@ -209,6 +203,3 @@ export default function Analytics() {
     </div>
   );
 }
-
-
-

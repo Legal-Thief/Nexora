@@ -27,7 +27,6 @@ export default function Notifications() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto min-h-screen bg-slate-950 text-slate-200">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
@@ -43,7 +42,6 @@ export default function Notifications() {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Filter toggle */}
           <div className="bg-slate-900 p-1 rounded-lg border border-slate-800 flex">
             <button onClick={() => setFilter('all')}
               className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
@@ -59,7 +57,6 @@ export default function Notifications() {
             </button>
           </div>
 
-          {/* Mark all read */}
           <button onClick={markAllRead} disabled={unreadCount === 0 || loading}
             className="flex items-center gap-2 px-4 py-2 bg-slate-900 border border-slate-800 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-slate-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium">
             <CheckCheck className="w-4 h-4"/>
@@ -68,7 +65,6 @@ export default function Notifications() {
         </div>
       </div>
 
-      {/* Notification list */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
         {loading && notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-slate-400">
@@ -101,7 +97,6 @@ export default function Notifications() {
         )}
       </div>
 
-      {/* Reset Demo Data */}
       <div className="flex justify-end mt-8">
         <button
           onClick={() => { resetNexoraData(); window.location.reload(); }}
@@ -114,4 +109,3 @@ export default function Notifications() {
     </div>
   );
 }
-

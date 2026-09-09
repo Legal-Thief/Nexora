@@ -7,7 +7,6 @@ export const PRIORITY_CONFIG = {
   high:   { label: 'High',   borderClass: 'border-l-amber-500' },
   urgent: { label: 'Urgent', borderClass: 'border-l-red-500' },
 };
-// Single source of truth for team members used in dropdowns
 export const ASSIGNEES = [
   { _id: 'user_001', name: 'Tanishq Patel',  projectRole: 'project_manager' },
   { _id: 'user_002', name: 'Tanmai Pahwa',   projectRole: 'designer' },

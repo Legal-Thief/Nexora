@@ -3,7 +3,6 @@ import { X, CalendarDays, Clock, User, Edit2, Save, Trash2, AlertCircle } from '
 import { COLUMN_LABELS, ASSIGNEES } from '../../constants/kanban';
 import { useTaskStore } from '../../store/taskStore';
 
-// â”€â”€â”€ Style maps â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const priorityBadge = {
   urgent: 'bg-red-500/10 text-red-400 border border-red-500/20',
   high:   'bg-amber-500/10 text-amber-400 border border-amber-500/20',
@@ -18,17 +17,13 @@ const statusBadge = {
   DONE:        'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30',
 };
 
-// â”€â”€â”€ Reusable field label â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const FieldLabel = ({ children }) => (
   <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1.5">
     {children}
   </div>
 );
 
-// â”€â”€â”€ Select input style â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const selectCls = 'w-full bg-slate-800 border border-slate-700 text-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition cursor-pointer';
-
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function TaskModal({ task, onClose }) {
   const { updateTaskStatus, updateTask, deleteTask } = useTaskStore();
@@ -56,7 +51,6 @@ export default function TaskModal({ task, onClose }) {
 
   if (!task) return null;
 
-  // Sync form when task changes externally
   useEffect(() => {
     setForm({
       title:       task.title       || '',
@@ -68,7 +62,6 @@ export default function TaskModal({ task, onClose }) {
     });
   }, [task]);
 
-  // â”€â”€ Handlers (unchanged) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleStatusChange = async (e) => { await updateTaskStatus(task._id, e.target.value); };
 
   const handleSave = async () => {
@@ -99,7 +92,6 @@ export default function TaskModal({ task, onClose }) {
     catch (err) { setError(err.message); setDeleting(false); }
   };
 
-  // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
@@ -107,10 +99,8 @@ export default function TaskModal({ task, onClose }) {
     >
       <div className="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto shadow-2xl shadow-black/50 flex flex-col">
 
-        {/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         <div className="flex items-start justify-between p-6 border-b border-slate-800">
           <div className="flex-1 pr-4 min-w-0">
-            {/* Badges row */}
             <div className="flex items-center flex-wrap gap-2 mb-3">
               <span className="font-mono text-[10px] text-slate-600 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
                 {task._id}
@@ -123,7 +113,6 @@ export default function TaskModal({ task, onClose }) {
               </span>
             </div>
 
-            {/* Title â€” view or edit */}
             {editing ? (
               <input
                 autoFocus
@@ -136,7 +125,6 @@ export default function TaskModal({ task, onClose }) {
             )}
           </div>
 
-          {/* Action buttons */}
           <div className="flex items-center gap-1 shrink-0">
             {!editing ? (
               <>
@@ -173,19 +161,15 @@ export default function TaskModal({ task, onClose }) {
           </div>
         </div>
 
-        {/* â”€â”€ Error banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         {error && (
           <div className="mx-6 mt-4 flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-3 py-2.5 rounded-xl">
             <AlertCircle size={15} className="shrink-0" /> {error}
           </div>
         )}
 
-        {/* â”€â”€ Body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         <div className="p-6 flex-1 flex flex-col md:flex-row gap-8">
 
-          {/* Main column */}
           <div className="flex-1 min-w-0 space-y-6">
-            {/* Description */}
             <div>
               <FieldLabel>Description</FieldLabel>
               {editing ? (
@@ -204,7 +188,6 @@ export default function TaskModal({ task, onClose }) {
               )}
             </div>
 
-            {/* Labels */}
             {task.labels && task.labels.length > 0 && (
               <div>
                 <FieldLabel>Labels</FieldLabel>
@@ -220,10 +203,8 @@ export default function TaskModal({ task, onClose }) {
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="w-full md:w-56 space-y-5 shrink-0">
 
-            {/* Status */}
             <div>
               <FieldLabel>Status</FieldLabel>
               <select
@@ -239,7 +220,6 @@ export default function TaskModal({ task, onClose }) {
               </select>
             </div>
 
-            {/* Priority (edit mode only) */}
             {editing && (
               <div>
                 <FieldLabel>Priority</FieldLabel>
@@ -257,7 +237,6 @@ export default function TaskModal({ task, onClose }) {
               </div>
             )}
 
-            {/* Assignee */}
             <div>
               <FieldLabel>Assignee</FieldLabel>
               {editing ? (
@@ -282,7 +261,6 @@ export default function TaskModal({ task, onClose }) {
               )}
             </div>
 
-            {/* Deadline */}
             <div>
               <FieldLabel>Deadline</FieldLabel>
               {editing ? (
@@ -305,7 +283,6 @@ export default function TaskModal({ task, onClose }) {
               )}
             </div>
 
-            {/* Created */}
             <div>
               <FieldLabel>Created</FieldLabel>
               <div className="flex items-center gap-2 text-slate-400 text-sm">
@@ -317,7 +294,6 @@ export default function TaskModal({ task, onClose }) {
           </div>
         </div>
 
-        {/* â”€â”€ Delete confirmation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         {confirmDelete && (
           <div className="mx-6 mb-6 p-4 bg-red-500/8 border border-red-500/25 rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <p className="text-sm text-red-300">Permanently delete this task? This cannot be undone.</p>
@@ -342,4 +318,3 @@ export default function TaskModal({ task, onClose }) {
     </div>
   );
 }
-

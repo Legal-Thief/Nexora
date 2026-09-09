@@ -14,7 +14,6 @@ export const useTaskStore = create((set, get) => ({
   setActiveTask: (task) => set({ activeTask: task }),
   clearActiveTask: ()   => set({ activeTask: null }),
 
-  //  Read 
   fetchTasks: async (projectId) => {
     set({ loading: true });
     try {
@@ -25,7 +24,6 @@ export const useTaskStore = create((set, get) => ({
     }
   },
 
-  /** Get tasks for a Kanban column (client-side filtered). */
   getTasksByColumn: (column) => {
     const { tasks, filters } = get();
     return tasks
@@ -35,36 +33,26 @@ export const useTaskStore = create((set, get) => ({
       .filter((t) => !filters.assignee || t.assignee?._id === filters.assignee);
   },
 
-  // ── Create ─────────────────────────────────────────────────────────────────
-
   createTask: async (projectId, data) => {
     const { task } = await taskService.createTask(projectId, data);
     set((s) => ({ tasks: [...s.tasks, task] }));
     return task;
   },
 
-  // ── Update: status (drag & drop — optimistic with rollback) ───────────────
-
   updateTaskStatus: async (id, status) => {
-    // Snapshot for rollback
     const snapshot = get().tasks.find((t) => t._id === id);
-    // Optimistic update
     set((s) => ({ tasks: s.tasks.map((t) => (t._id === id ? { ...t, status } : t)) }));
     try {
       const { task } = await taskService.updateTaskStatus(id, status);
-      // Replace with authoritative version (has updated __v + updatedAt)
       set((s) => ({
         tasks:      s.tasks.map((t) => (t._id === id ? task : t)),
         activeTask: s.activeTask?._id === id ? task : s.activeTask,
       }));
     } catch (err) {
-      // Rollback on failure
       if (snapshot) set((s) => ({ tasks: s.tasks.map((t) => (t._id === id ? snapshot : t)) }));
       throw err;
     }
   },
-
-  // ── Update: full edit (title, description, priority, assignee, deadline) ──
 
   updateTask: async (id, data) => {
     const { task } = await taskService.updateTask(id, data);
@@ -75,8 +63,6 @@ export const useTaskStore = create((set, get) => ({
     return task;
   },
 
-  // ── Delete ─────────────────────────────────────────────────────────────────
-
   deleteTask: async (id) => {
     await taskService.deleteTask(id);
     set((s) => ({
@@ -85,7 +71,6 @@ export const useTaskStore = create((set, get) => ({
     }));
   },
 
-  // ── Real-time socket handlers (no-op until backend is ready) ──────────────
   socketUpdateTask: (task) =>
     set((s) => ({
       tasks:      s.tasks.map((t) => (t._id === task._id ? task : t)),

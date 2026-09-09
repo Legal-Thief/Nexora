@@ -27,7 +27,6 @@ export default function RegisterForm() {
       await register({ name: form.name, email: form.email, password: form.password });
       navigate('/profile');
     } catch {
-      // Error is displayed via store
     }
   };
 
@@ -135,4 +134,3 @@ export default function RegisterForm() {
     </form>
   );
 }
-

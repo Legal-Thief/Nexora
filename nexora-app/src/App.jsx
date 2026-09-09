@@ -1,20 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-// Stores
 import useAuthStore        from './store/authStore';
 import useWorkspaceStore   from './store/workspaceStore';
 import useNotificationStore from './store/notificationStore';
 
-// Layout
 import AppShell       from './components/layout/AppShell';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 
-// Auth pages (public)
 import LoginPage    from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
-// Protected pages
 import DashboardPage      from './pages/DashboardPage';
 import WorkspacePage      from './pages/WorkspacePage';
 import ProjectsPage       from './pages/ProjectsPage';
@@ -23,7 +19,6 @@ import AnalyticsPage      from './pages/AnalyticsPage';
 import NotificationsPage  from './pages/NotificationsPage';
 import ProfilePage        from './pages/ProfilePage';
 
-// Redirect unauthenticated users to /login
 function PublicOnlyRoute({ children }) {
   const { user } = useAuthStore();
   if (user) return <Navigate to="/dashboard" replace />;
@@ -35,10 +30,8 @@ export default function App() {
   const { fetchWorkspaces }            = useWorkspaceStore();
   const { fetchNotifications }         = useNotificationStore();
 
-  // 1. Restore session from localStorage on first load
   useEffect(() => { loadUser(); }, []);
 
-  // 2. Bootstrap global data once user is known
   useEffect(() => {
     if (user) {
       fetchWorkspaces();
@@ -49,11 +42,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ── Public routes ──────────────────────────────────────── */}
         <Route path="/login"    element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
         <Route path="/register" element={<PublicOnlyRoute><RegisterPage /></PublicOnlyRoute>} />
 
-        {/* ── Protected routes (inside AppShell with Sidebar) ─────── */}
         <Route
           path="/dashboard"
           element={<ProtectedRoute><AppShell><DashboardPage /></AppShell></ProtectedRoute>}
@@ -66,12 +57,10 @@ export default function App() {
           path="/projects"
           element={<ProtectedRoute><AppShell><ProjectsPage /></AppShell></ProtectedRoute>}
         />
-        {/* /board/:projectId — project-specific Kanban board */}
         <Route
           path="/board/:projectId"
           element={<ProtectedRoute><AppShell><BoardPage /></AppShell></ProtectedRoute>}
         />
-        {/* /board — default board (falls back to proj_001) */}
         <Route
           path="/board"
           element={<ProtectedRoute><AppShell><BoardPage /></AppShell></ProtectedRoute>}
@@ -89,7 +78,6 @@ export default function App() {
           element={<ProtectedRoute><AppShell><ProfilePage /></AppShell></ProtectedRoute>}
         />
 
-        {/* ── Default redirects ────────────────────────────────────── */}
         <Route path="/"  element={<Navigate to="/dashboard" replace />} />
         <Route path="*"  element={<Navigate to="/dashboard" replace />} />
       </Routes>

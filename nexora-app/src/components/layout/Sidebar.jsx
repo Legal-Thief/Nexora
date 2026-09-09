@@ -68,7 +68,6 @@ export default function Sidebar({ onClose }) {
 
   return (
     <aside className="flex flex-col h-full w-60 bg-slate-900 border-r border-slate-800 shrink-0">
-      {/* Brand */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-800">
         <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
           <Kanban size={16} className="text-white" />
@@ -79,7 +78,6 @@ export default function Sidebar({ onClose }) {
         </div>
       </div>
 
-      {/* Nav sections */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {navSections.map((section, si) => (
           <div key={si}>
@@ -105,7 +103,6 @@ export default function Sidebar({ onClose }) {
         ))}
       </nav>
 
-      {/* User footer */}
       <div className="px-3 pb-4 pt-3 border-t border-slate-800 space-y-1">
         {user && (
           <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-800/50 mb-2">

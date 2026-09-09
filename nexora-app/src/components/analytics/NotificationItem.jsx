@@ -23,7 +23,6 @@ const getIconForType = (type) => {
 };
 
 export default function NotificationItem({ notification, onMarkRead, onDelete }) {
-  // Use _id consistently — mock data uses _id to match MongoDB schema
   const { _id, type, title, message, read, createdAt } = notification;
 
   return (
@@ -77,4 +76,3 @@ export default function NotificationItem({ notification, onMarkRead, onDelete })
     </div>
   );
 }
-

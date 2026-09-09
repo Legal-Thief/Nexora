@@ -3,7 +3,6 @@ import useWorkspaceStore from '../store/workspaceStore';
 import ProjectCard from '../components/workspace/ProjectCard';
 import { Search, Plus, X } from 'lucide-react';
 
-// ─── Inline Create/Edit Project Modal ────────────────────────────────────────
 function ProjectModal({ initial, onClose, onSave }) {
   const isEdit = Boolean(initial);
   const [form, setForm] = useState({
@@ -92,7 +91,6 @@ function ProjectModal({ initial, onClose, onSave }) {
   );
 }
 
-// ─── Projects Page ────────────────────────────────────────────────────────────
 export default function ProjectsPage() {
   const {
     activeWorkspace, projects, loading,
@@ -102,8 +100,8 @@ export default function ProjectsPage() {
   const [filter, setFilter]           = useState('all');
   const [search, setSearch]           = useState('');
   const [showModal, setShowModal]     = useState(false);
-  const [editTarget, setEditTarget]   = useState(null);   // project being edited
-  const [deleteTarget, setDeleteTarget] = useState(null); // project _id pending delete
+  const [editTarget, setEditTarget]   = useState(null);   
+  const [deleteTarget, setDeleteTarget] = useState(null); 
 
   if (!activeWorkspace) {
     return (
@@ -127,7 +125,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="p-8 min-h-screen bg-slate-950 text-slate-100 max-w-7xl mx-auto">
-      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Projects</h1>
@@ -139,7 +136,6 @@ export default function ProjectsPage() {
         </button>
       </div>
 
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
         <div className="flex space-x-1 bg-slate-950 p-1 rounded-lg border border-slate-800 w-full sm:w-auto">
           {['all','active','completed','paused'].map(s => (
@@ -160,7 +156,6 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Grid */}
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
           {[1,2,3,4,5,6].map(i => <div key={i} className="h-64 bg-slate-800 rounded-xl"/>)}
@@ -193,7 +188,6 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {/* Create / Edit Modal */}
       {showModal && (
         <ProjectModal
           initial={editTarget}
@@ -202,7 +196,6 @@ export default function ProjectsPage() {
         />
       )}
 
-      {/* Delete Confirmation */}
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-full max-w-sm shadow-2xl text-center">
@@ -224,4 +217,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-

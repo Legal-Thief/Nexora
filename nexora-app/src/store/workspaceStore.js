@@ -1,13 +1,3 @@
-/**
- * workspaceStore.js — Module 2
- *
- * Zustand store — manages UI state only.
- * All data operations go through workspaceService.
- *
- * Architecture:
- *   Component → Store action → Service → Mock DB (localStorage) → State update
- */
-
 import { create } from 'zustand';
 import * as svc from '../services/workspaceService';
 
@@ -19,14 +9,11 @@ export const useWorkspaceStore = create((set, get) => ({
   loading:         false,
   error:           null,
 
-  // ── Workspace: Read ────────────────────────────────────────────────────────
-
   fetchWorkspaces: async () => {
     set({ loading: true, error: null });
     try {
       const { workspaces } = await svc.fetchWorkspaces();
       set({ workspaces, loading: false });
-      // Auto-select first workspace if none active
       if (!get().activeWorkspace && workspaces.length > 0) {
         get().setActiveWorkspace(workspaces[0]);
       }
@@ -39,8 +26,6 @@ export const useWorkspaceStore = create((set, get) => ({
     set({ activeWorkspace: workspace, projects: [], activeProject: null });
     get().fetchProjects(workspace._id);
   },
-
-  // ── Workspace: Create ──────────────────────────────────────────────────────
 
   createWorkspace: async (data, currentUser) => {
     set({ loading: true, error: null });
@@ -59,8 +44,6 @@ export const useWorkspaceStore = create((set, get) => ({
     }
   },
 
-  // ── Workspace: Update ──────────────────────────────────────────────────────
-
   updateWorkspace: async (id, data) => {
     set({ loading: true, error: null });
     try {
@@ -76,8 +59,6 @@ export const useWorkspaceStore = create((set, get) => ({
       throw err;
     }
   },
-
-  // ── Workspace: Delete ──────────────────────────────────────────────────────
 
   deleteWorkspace: async (id) => {
     set({ loading: true, error: null });
@@ -98,8 +79,6 @@ export const useWorkspaceStore = create((set, get) => ({
     }
   },
 
-  // ── Project: Read ──────────────────────────────────────────────────────────
-
   fetchProjects: async (workspaceId) => {
     set({ loading: true, error: null });
     try {
@@ -111,8 +90,6 @@ export const useWorkspaceStore = create((set, get) => ({
   },
 
   setActiveProject: (project) => set({ activeProject: project }),
-
-  // ── Project: Create ────────────────────────────────────────────────────────
 
   createProject: async (data, currentUser) => {
     const { activeWorkspace } = get();
@@ -127,8 +104,6 @@ export const useWorkspaceStore = create((set, get) => ({
       throw err;
     }
   },
-
-  // ── Project: Update ────────────────────────────────────────────────────────
 
   updateProject: async (id, data) => {
     set({ loading: true, error: null });
@@ -145,8 +120,6 @@ export const useWorkspaceStore = create((set, get) => ({
       throw err;
     }
   },
-
-  // ── Project: Delete ────────────────────────────────────────────────────────
 
   deleteProject: async (id) => {
     set({ loading: true, error: null });

@@ -5,8 +5,6 @@ const delay = (ms = 400) => new Promise((r) => setTimeout(r, ms));
 const VALID_STATUSES   = ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'];
 const VALID_PRIORITIES = ['urgent', 'high', 'medium', 'low'];
 
-// Read
-/** Real API: GET /api/projects/:id/tasks */
 export const fetchTasks = async (projectId, filters = {}) => {
   await delay(350);
   if (!projectId) throw new Error('Project ID is required.');
@@ -29,7 +27,6 @@ export const fetchTasks = async (projectId, filters = {}) => {
   return { tasks };
 };
 
-/** Real API: GET /api/tasks/:id */
 export const fetchTask = async (id) => {
   await delay(150);
   if (!id) throw new Error('Task ID is required.');
@@ -38,13 +35,9 @@ export const fetchTask = async (id) => {
   return { task };
 };
 
-//  Create 
-
-/** Real API: POST /api/projects/:id/tasks */
 export const createTask = async (projectId, data) => {
   await delay(450);
 
-  // ── Validation ──
   if (!projectId)         throw new Error('Project ID is required.');
   if (!data.title?.trim()) throw new Error('Task title is required.');
   if (data.title.trim().length > 200) throw new Error('Title must be 200 characters or fewer.');
@@ -77,8 +70,6 @@ export const createTask = async (projectId, data) => {
   return { task };
 };
 
-// ── Update
-/** Real API: PATCH /api/tasks/:id — status-only change (called by drag & drop) */
 export const updateTaskStatus = async (id, status) => {
   await delay(150);
   if (!id) throw new Error('Task ID is required.');
@@ -97,7 +88,6 @@ export const updateTaskStatus = async (id, status) => {
   return { task: updated[idx] };
 };
 
-/** Real API: PATCH /api/tasks/:id — full update */
 export const updateTask = async (id, data) => {
   await delay(300);
   if (!id) throw new Error('Task ID is required.');
@@ -133,9 +123,6 @@ export const updateTask = async (id, data) => {
   return { task: updated[idx] };
 };
 
-// Delete
-
-/** Real API: DELETE /api/tasks/:id */
 export const deleteTask = async (id) => {
   await delay(250);
   if (!id) throw new Error('Task ID is required.');

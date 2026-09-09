@@ -15,7 +15,6 @@ export default function ProjectCard({ project, onEdit, onDelete }) {
 
   return (
     <div className="group bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-slate-700 hover:shadow-lg hover:shadow-black/20 transition-all duration-200 flex flex-col gap-4">
-      {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <span className="text-2xl shrink-0">{project.emoji || '📌'}</span>
@@ -29,7 +28,6 @@ export default function ProjectCard({ project, onEdit, onDelete }) {
         </span>
       </div>
 
-      {/* Progress */}
       <div>
         <div className="flex items-center justify-between text-xs text-slate-500 mb-1.5">
           <span className="flex items-center gap-1">
@@ -46,23 +44,39 @@ export default function ProjectCard({ project, onEdit, onDelete }) {
         </div>
       </div>
 
-      {/* Meta */}
-      <div className="flex items-center gap-4 text-xs text-slate-500">
-        <span className="flex items-center gap-1.5">
-          <Users size={12} />
-          {project.members?.length || 0} members
-        </span>
-        {project.deadline && (
+      <div className="flex items-center justify-between text-xs text-slate-500">
+        <div className="flex items-center gap-3 flex-wrap">
           <span className="flex items-center gap-1.5">
-            <Calendar size={12} />
-            {new Date(project.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+            <Users size={12} />
+            {project.members?.length || 0} members
           </span>
-        )}
+          {project.deadline && (
+            <span className="flex items-center gap-1.5">
+              <Calendar size={12} />
+              {new Date(project.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          )}
+        </div>
+
+        <div className="flex -space-x-1.5 shrink-0">
+          {(project.members || []).slice(0, 4).map((member) => (
+            <div
+              key={member._id || member.id || member.name}
+              className="w-6 h-6 rounded-full bg-slate-800 border-2 border-slate-900 flex items-center justify-center text-[10px] font-semibold text-slate-300 ring-1 ring-slate-700/50"
+              title={`${member.name} (${member.role || 'Member'})`}
+            >
+              {member.name ? member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '?'}
+            </div>
+          ))}
+          {(project.members || []).length > 4 && (
+            <div className="w-6 h-6 rounded-full bg-slate-800 border-2 border-slate-900 flex items-center justify-center text-[9px] font-medium text-slate-400">
+              +{project.members.length - 4}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Actions */}
       <div className="flex items-center gap-2 pt-1 border-t border-slate-800/60">
-        {/* Open Board — primary integration link */}
         <button
           onClick={() => navigate(`/board/${project._id}`)}
           className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-lg text-xs font-semibold border border-indigo-500/20 hover:border-indigo-600 transition-all"
