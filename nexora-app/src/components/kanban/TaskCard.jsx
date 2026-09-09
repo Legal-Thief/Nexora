@@ -105,7 +105,7 @@ export default function TaskCard({ task, onClick, onDragStart, onDragEnd }) {
               className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px] text-slate-500 ring-2 ring-slate-900"
               title="Unassigned"
             >
-              â€”
+              -
             </div>
           )}
         </div>

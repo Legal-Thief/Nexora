@@ -88,7 +88,7 @@ export default function LoginForm() {
       </p>
 
       <div className="border-t border-slate-700/50 pt-3">
-        <p className="text-xs text-slate-600 text-center">Demo credentials: tanishq@nexora.com / password123</p>
+        <p className="text-xs text-slate-600 text-center">Demo: demo@nexora.com / password123</p>
       </div>
     </form>
   );

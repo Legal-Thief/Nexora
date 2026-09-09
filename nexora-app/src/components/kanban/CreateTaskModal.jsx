@@ -130,7 +130,7 @@ export default function CreateTaskModal({ projectId, onClose }) {
             <textarea
               value={form.description}
               onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-              placeholder="Describe what needs to be doneâ€¦"
+              placeholder="Describe what needs to be done..."
               rows={3}
               className={`${inputCls} resize-none`}
             />
@@ -207,7 +207,7 @@ export default function CreateTaskModal({ projectId, onClose }) {
               className="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 disabled:opacity-60 text-white rounded-xl text-sm font-semibold transition shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-2"
             >
               <Plus size={15} />
-              {saving ? 'Creatingâ€¦' : 'Create Task'}
+              {saving ? 'Creating...' : 'Create Task'}
             </button>
           </div>
         </form>

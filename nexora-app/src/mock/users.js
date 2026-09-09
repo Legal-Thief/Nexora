@@ -4,13 +4,17 @@ const STORAGE_KEY_USERS       = 'nexora_users';
 const STORAGE_KEY_CREDENTIALS = 'nexora_credentials';
 
 const SEED_USERS = [
-  { _id: 'user_001', name: 'Tanishq Patel',  email: 'tanishq@nexora.com', profilePicture: null, workspaceRole: 'owner',  projectRole: 'project_manager', isActive: true,  lastSeen: new Date().toISOString(), createdAt: '2024-01-15T09:00:00.000Z' },
-  { _id: 'user_002', name: 'Tanmai Pahwa',   email: 'tanmai@nexora.com',  profilePicture: null, workspaceRole: 'admin',  projectRole: 'designer',        isActive: true,  lastSeen: new Date(Date.now()-3600000).toISOString(),  createdAt: '2024-02-20T10:30:00.000Z' },
-  { _id: 'user_003', name: 'Udita Singh',    email: 'udita@nexora.com',   profilePicture: null, workspaceRole: 'member', projectRole: 'developer',       isActive: false, lastSeen: new Date(Date.now()-86400000).toISOString(), createdAt: '2024-03-10T08:00:00.000Z' },
-  { _id: 'user_004', name: 'Vidita Sharma',  email: 'vidita@nexora.com',  profilePicture: null, workspaceRole: 'member', projectRole: 'qa',              isActive: true,  lastSeen: new Date(Date.now()-7200000).toISOString(),  createdAt: '2024-03-18T11:00:00.000Z' },
+  // Demo account — shared credentials shown on login page
+  { _id: 'user_000', name: 'Demo User',     email: 'demo@nexora.com',    profilePicture: null, workspaceRole: 'owner',  projectRole: 'project_manager', isActive: true,  lastSeen: new Date().toISOString(), createdAt: '2024-01-01T09:00:00.000Z' },
+  // Team members
+  { _id: 'user_001', name: 'Tanishq Patel', email: 'tanishq@nexora.com', profilePicture: null, workspaceRole: 'owner',  projectRole: 'project_manager', isActive: true,  lastSeen: new Date().toISOString(),               createdAt: '2024-01-15T09:00:00.000Z' },
+  { _id: 'user_002', name: 'Tanmai Pahwa',  email: 'tanmai@nexora.com',  profilePicture: null, workspaceRole: 'admin',  projectRole: 'designer',        isActive: true,  lastSeen: new Date(Date.now()-3600000).toISOString(),  createdAt: '2024-02-20T10:30:00.000Z' },
+  { _id: 'user_003', name: 'Udita Singh',   email: 'udita@nexora.com',   profilePicture: null, workspaceRole: 'member', projectRole: 'developer',       isActive: false, lastSeen: new Date(Date.now()-86400000).toISOString(), createdAt: '2024-03-10T08:00:00.000Z' },
+  { _id: 'user_004', name: 'Vidita Sharma', email: 'vidita@nexora.com',  profilePicture: null, workspaceRole: 'member', projectRole: 'qa',              isActive: true,  lastSeen: new Date(Date.now()-7200000).toISOString(),  createdAt: '2024-03-18T11:00:00.000Z' },
 ];
 
 const SEED_CREDENTIALS = [
+  { email: 'demo@nexora.com',    password: 'password123' },
   { email: 'tanishq@nexora.com', password: 'password123' },
   { email: 'tanmai@nexora.com',  password: 'password123' },
   { email: 'udita@nexora.com',   password: 'password123' },
