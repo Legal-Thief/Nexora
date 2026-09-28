@@ -14,9 +14,8 @@
 | API      | Pure REST API (Route → Validator → Controller → Model) |
 | Validation | `express-validator` |
 
-> **Architecture Note:**  
-> Socket.IO and WebSockets have been completely removed in favor of standard, predictable REST APIs.  
-> Every user action follows a straightforward request/response cycle:
+> **Architecture:**  
+> Nexora follows a clean, RESTful architecture where every user action flows through a structured request/response cycle:  
 > `React Component` → `Axios` → `Express Route` → `Validator` → `Controller` → `Mongoose Model` → `MongoDB` → `JSON Response` → `React State Update`.
 
 ---
